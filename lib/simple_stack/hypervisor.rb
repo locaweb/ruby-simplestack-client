@@ -17,7 +17,7 @@ module SimpleStack
     end
 
     def guests
-      Simplestack::Collection.new "#{url}/guests", Simplestack::Guest
+      SimpleStack::Collection.new "#{url}/guests", SimpleStack::Guest
     end
   end
 end

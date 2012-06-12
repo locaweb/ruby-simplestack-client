@@ -5,11 +5,11 @@ require "simple_stack/version"
 Gem::Specification.new do |s|
   s.name        = "simple_stack"
   s.version     = SimpleStack::VERSION
-  s.authors     = ["TODO: Write your name"]
+  s.authors     = ["Thiago Morello"]
   s.email       = ["thiago.morello@locaweb.com.br"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{A Simple Stack gem}
+  s.description = %q{A Simple Stack gem}
 
   s.rubyforge_project = "simple_stack"
 
@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency "httparty"
 end

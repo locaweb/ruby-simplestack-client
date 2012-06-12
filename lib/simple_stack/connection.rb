@@ -7,7 +7,7 @@ module SimpleStack
     end
 
     def connect_to(type, options)
-      Simplestack::Hypervisor.new url, type, options
+      SimpleStack::Hypervisor.new url, type, options
     end
   end
 end
