@@ -8,7 +8,7 @@ module SimpleStack
     end
 
     def to_a
-      @items ||= SimpleStack.client.get(url).map do |item|
+      @items = SimpleStack.client.get(url).map do |item|
         clazz.new "#{url}/#{item["id"]}"
       end
     end
