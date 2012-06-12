@@ -1,23 +1,51 @@
 module SimpleStack
   class Hypervisor
-    attr_accessor :main_url, :type, :host
+    attr_accessor :connection, :type, :host
 
-    def initialize(main_url, type, options)
-      self.main_url = main_url
+    def initialize(connection, type, options)
+      self.connection = connection
       self.type = type
       self.host = options[:host]
     end
 
     def url
-      "#{main_url}/#{type}/#{host}"
+      "#{connection.url}/#{type}/#{host}"
+    end
+
+    def headers
+      [
+        "x-simplestack-version" => "1.0",
+        "x-simplestack-token"   => connection.token,
+        "x-simplestack-hypervisor-token" => token
+      ]
+    end
+
+    def token
+      "TODO"
     end
 
     def info
-      SimpleStack.client.get url
+      self.get url
     end
 
     def guests
-      SimpleStack::Collection.new "#{url}/guests", SimpleStack::Guest
+      SimpleStack::Collection.new self, "#{url}/guests", SimpleStack::Guest
+    end
+
+    def get(url)
+      HTTParty.get(url, :headers => headers)
+    end
+
+    def post(url, body)
+      HTTParty.post(url, :body => body, :headers => headers)
+    end
+
+    def put(url, body)
+      HTTParty.put(url, :body => body, :headers => headers)
+    end
+
+    def delete(url)
+      HTTParty.delete(url, :headers => headers)
     end
   end
 end

@@ -7,7 +7,11 @@ module SimpleStack
     end
 
     def connect_to(type, options)
-      SimpleStack::Hypervisor.new url, type, options
+      SimpleStack::Hypervisor.new self, type, options
+    end
+
+    def token
+      "TODO"
     end
   end
 end

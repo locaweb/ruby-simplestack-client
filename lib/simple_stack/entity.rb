@@ -2,20 +2,20 @@ module SimpleStack
   class Entity
     attr_accessor :url
 
-    def initialize(url)
-      self.url = url
+    def initialize(connection, url)
+      self.connection = connection
     end
 
     def info
-      SimpleStack.client.get url
+      connection.get url
     end
 
     def update(attributes = {})
-      SimpleStack.client.put url, attributes
+      connection.put url, attributes
     end
 
     def delete
-      SimpleStack.client.delete url
+      connection.delete url
     end
   end
 end

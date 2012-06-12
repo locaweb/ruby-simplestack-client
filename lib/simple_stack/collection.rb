@@ -1,25 +1,26 @@
 module SimpleStack
   class Collection
-    attr_accessor :url, :clazz
+    attr_accessor :connection, :url, :clazz
 
-    def initialize(url, clazz)
+    def initialize(connection, url, clazz)
+      self.connection = connection
       self.url = url
       self.clazz = clazz
     end
 
     def to_a
-      @items = SimpleStack.client.get(url).map do |item|
-        clazz.new "#{url}/#{item["id"]}"
+      @items = connection.get(url).map do |item|
+        clazz.new connection, "#{url}/#{item["id"]}"
       end
     end
 
     def find(id)
-      clazz.new "#{url}/#{id}"
+      clazz.new connection, "#{url}/#{id}"
     end
 
     def create(options={})
-      response = SimpleStack.client.post(url, options)
-      clazz.new response.headers["location"]
+      response = connection.post(url, options)
+      clazz.new connection, response.headers["location"]
     end
 
     def method_missing(method, *args, &block)

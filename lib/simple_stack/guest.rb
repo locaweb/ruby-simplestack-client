@@ -1,15 +1,15 @@
 module SimpleStack
   class Guest < Entity
     def snapshots
-      SimpleStack::Collection.new "#{url}/snapshots", SimpleStack::Snapshot
+      SimpleStack::Collection.new connection, "#{url}/snapshots", SimpleStack::Snapshot
     end
 
     def reboot
-      SimpleStack.client.put "#{url}/reboot"
+      connection.put "#{url}/reboot"
     end
 
     def power_state=(state)
-      SimpleStack.client.put "#{url}/power", :state => state
+      connection.put "#{url}/power", :state => state
     end
 
     ["start", "stop", "force_stop", "pause", "resume"].each do |state|
