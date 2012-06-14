@@ -1,9 +1,10 @@
 module SimpleStack
   class Entity
-    attr_accessor :url
+    attr_accessor :connection, :url
 
     def initialize(connection, url)
       self.connection = connection
+      self.url = url
     end
 
     def info

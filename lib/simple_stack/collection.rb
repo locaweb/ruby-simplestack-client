@@ -27,5 +27,9 @@ module SimpleStack
       to_a.send(method, *args, &block)
     end
 
+    def inspect
+      to_a.inspect
+    end
+
   end
 end

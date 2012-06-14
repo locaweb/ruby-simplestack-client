@@ -1,3 +1,5 @@
+require "json"
+
 module SimpleStack
   class Hypervisor
     attr_accessor :connection, :type, :host
@@ -16,7 +18,8 @@ module SimpleStack
       {
         "x-simplestack-version" => "1.0",
         "x-simplestack-token"   => connection.token,
-        "x-simplestack-hypervisor-token" => token
+        "x-simplestack-hypervisor-token" => token,
+        "Content-Type" => "application/json"
       }
     end
 
@@ -37,11 +40,11 @@ module SimpleStack
     end
 
     def post(url, body)
-      HTTParty.post(url, :body => body, :headers => headers)
+      HTTParty.post(url, :body => JSON.dump(body), :headers => headers)
     end
 
     def put(url, body)
-      HTTParty.put(url, :body => body, :headers => headers)
+      HTTParty.put(url, :body => JSON.dump(body), :headers => headers)
     end
 
     def delete(url)
