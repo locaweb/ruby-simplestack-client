@@ -13,11 +13,11 @@ module SimpleStack
     end
 
     def headers
-      [
+      {
         "x-simplestack-version" => "1.0",
         "x-simplestack-token"   => connection.token,
         "x-simplestack-hypervisor-token" => token
-      ]
+      }
     end
 
     def token
