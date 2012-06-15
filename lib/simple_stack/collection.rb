@@ -1,26 +1,28 @@
 module SimpleStack
   class Collection
-    attr_accessor :connection, :url, :clazz
+    attr_accessor :hypervisor, :url, :clazz
 
-    def initialize(connection, url, clazz)
-      self.connection = connection
-      self.url = url
+    def initialize(hypervisor, url, clazz)
+      self.hypervisor = hypervisor
+      self.url = url.to_s
       self.clazz = clazz
     end
 
     def to_a
-      @items = connection.get(url).map do |item|
-        clazz.new connection, "#{url}/#{item["id"]}"
+      @items = hypervisor.get(url).map do |item|
+        clazz.new hypervisor, "#{url}/#{item["id"]}"
       end
     end
 
     def find(id)
-      clazz.new connection, "#{url}/#{id}"
+      clazz.new hypervisor, "#{url}/#{id}"
     end
 
     def create(options={})
-      response = connection.post(url, options)
-      clazz.new connection, response.headers["location"]
+      response = hypervisor.post(url, options)
+      entity_path = response.headers["location"].sub(/^\//, "").sub(/\/$/, "")
+      entity_url = "#{connection.url}/#{entity_path}"
+      clazz.new hypervisor, entity_url
     end
 
     def method_missing(method, *args, &block)
@@ -29,6 +31,10 @@ module SimpleStack
 
     def inspect
       to_a.inspect
+    end
+
+    def connection
+      hypervisor.connection
     end
 
   end

@@ -1,22 +1,30 @@
 module SimpleStack
   class Entity
-    attr_accessor :connection, :url
+    attr_accessor :hypervisor, :url
 
-    def initialize(connection, url)
-      self.connection = connection
-      self.url = url
+    def initialize(hypervisor, url)
+      self.hypervisor = hypervisor
+      self.url = url.to_s
     end
 
     def info
-      connection.get url
+      hypervisor.get url
     end
 
     def update(attributes = {})
-      connection.put url, attributes
+      hypervisor.put url, attributes
     end
 
     def delete
-      connection.delete url
+      hypervisor.delete url
+    end
+
+    def inspect
+      "#<#{self.class} info=#{info.to_json}>"
+    end
+
+    def connection
+      hypervisor.connection
     end
   end
 end

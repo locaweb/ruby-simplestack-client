@@ -1,5 +1,3 @@
-require "json"
-
 module SimpleStack
   class Hypervisor
     attr_accessor :connection, :type, :host
@@ -36,19 +34,19 @@ module SimpleStack
     end
 
     def get(url)
-      HTTParty.get(url, :headers => headers)
+      HTTParty.get(url, :headers => headers, :no_follow => true)
     end
 
     def post(url, body)
-      HTTParty.post(url, :body => JSON.dump(body), :headers => headers)
+      HTTParty.post(url, :body => JSON.dump(body), :headers => headers, :no_follow => true)
     end
 
     def put(url, body)
-      HTTParty.put(url, :body => JSON.dump(body), :headers => headers)
+      HTTParty.put(url, :body => JSON.dump(body), :headers => headers, :no_follow => true)
     end
 
     def delete(url)
-      HTTParty.delete(url, :headers => headers)
+      HTTParty.delete(url, :headers => headers, :no_follow => true)
     end
   end
 end

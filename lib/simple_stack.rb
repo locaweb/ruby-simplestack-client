@@ -1,3 +1,4 @@
+require "json"
 require "httparty"
 require "simple_stack/version"
 require "simple_stack/connection"
