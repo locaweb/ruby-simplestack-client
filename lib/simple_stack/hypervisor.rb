@@ -48,5 +48,9 @@ module SimpleStack
     def delete(url)
       HTTParty.delete(url, :headers => headers, :no_follow => true)
     end
+
+    def inspect
+      "#<#{self.class} url=#{url}>"
+    end
   end
 end
