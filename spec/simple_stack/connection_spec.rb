@@ -9,7 +9,7 @@ describe SimpleStack::Connection do
     subject.url.should == url
   end
   
-  it "should connect to an hypervisor" do
+  it "should connect to a hypervisor" do
     host = "hypervisor_host"
     hypervisor = subject.connect_to :mock, host: host
     hypervisor.type.should == :mock
