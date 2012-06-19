@@ -1,11 +1,13 @@
 module SimpleStack
   class Hypervisor
-    attr_accessor :connection, :type, :host
+    attr_accessor :connection, :type, :host, :username, :password
 
     def initialize(connection, type, options)
       self.connection = connection
       self.type = type
       self.host = options[:host]
+      self.username = options[:username]
+      self.password = options[:password]
     end
 
     def url
@@ -22,7 +24,7 @@ module SimpleStack
     end
 
     def token
-      "TODO"
+      Base64.encode64("#{username}:#{password}").split("\n").join("")
     end
 
     def info

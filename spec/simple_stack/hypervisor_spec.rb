@@ -16,4 +16,10 @@ describe SimpleStack::Hypervisor do
     subject.headers.should have_key("x-simplestack-hypervisor-token")
     subject.headers["Content-Type"].should == "application/json"
   end
+  
+  it "should have a base64 encoded username:password token for now" do
+    subject.username = "admin"
+    subject.password = "secret"
+    subject.token.should == "YWRtaW46c2VjcmV0"
+  end
 end

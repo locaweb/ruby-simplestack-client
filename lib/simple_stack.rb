@@ -1,4 +1,5 @@
 require "json"
+require "base64"
 require "httparty"
 require "simple_stack/version"
 require "simple_stack/connection"
