@@ -4,11 +4,11 @@ A simple gem to deal with Simple Stack project.
 
 Get a simplestack class:
 
-    stack = SimpleStack.new :url => url, :login => login, :password => password
+    stack = SimpleStack.new :url => url, :username => username, :password => password
 
 Connecting to hypervisor:
 
-    vmware = stack.connect_to("vmware", :host => host, :login => login, :password => password)
+    vmware = stack.connect_to("vmware", :host => host, :username => username, :password => password)
 
 Pool informations:
 
