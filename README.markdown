@@ -22,7 +22,7 @@ Pool informations:
 
 ### Working with Guests
 
-    guest = vmware.guests.find(vm.id)
+    guest = vmware.guests.find(vm.uuid)
     guest.info
     guest.update(:name => "Guest name", :memory => 512)
     guest.delete
@@ -37,6 +37,10 @@ Pool informations:
 List snapshots
 
     guest.snapshots
+
+Find a snapshot
+
+    guest.snapshots.find(snap.uuid)
 
 Create a new snapshot
 
