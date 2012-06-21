@@ -4,8 +4,8 @@ module SimpleStack
       SimpleStack::Collection.new hypervisor, "#{url}/snapshots", SimpleStack::Snapshot
     end
 
-    def reboot(force = false)
-      hypervisor.put "#{url}/reboot", :force => force
+    def reboot(opts={:force => false})
+      hypervisor.put "#{url}/reboot", :force => opts[:force]
     end
 
     def power_state=(state)
