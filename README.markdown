@@ -26,11 +26,23 @@ Pool informations:
     guest.info
     guest.update(:name => "Guest name", :memory => 512)
     guest.delete
-    guest.reboot
-    guest.stop
 
-    # TODO:
-    # file = guest.export :to => file_path
+Shutdown and power on and reboot
+    guest.stop
+    guest.start
+    guest.reboot
+
+Force the guest shutdown
+    guest.force_stop
+
+Resume and suspend guests
+
+    guest.resume
+    guest.pause
+
+TODO:
+
+    file = guest.export :to => file_path
 
 #### Snapshots
 
