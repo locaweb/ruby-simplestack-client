@@ -4,7 +4,7 @@ A simple gem to deal with Simple Stack project.
 
 Get a simplestack class:
 
-    stack = SimpleStack.new :url => url, :username => username, :password => password
+    stack = SimpleStack::Connection.new :url => url, :username => username, :password => password
 
 Connecting to hypervisor:
 
