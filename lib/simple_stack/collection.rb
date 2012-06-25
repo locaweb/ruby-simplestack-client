@@ -1,16 +1,19 @@
 module SimpleStack
   class Collection
-    attr_accessor :hypervisor, :url, :clazz
+    include SimpleStack::Cacheable
 
-    def initialize(hypervisor, url, clazz)
+    attr_accessor :hypervisor, :parent, :url, :clazz
+
+    def initialize(hypervisor, parent, url, clazz)
       self.hypervisor = hypervisor
+      self.parent = parent
       self.url = url.to_s
       self.clazz = clazz
     end
 
     def to_a
-      @items = hypervisor.get(url).map do |item|
-        clazz.new hypervisor, "#{url}/#{item["id"]}"
+      cached_attributes[:items] ||= hypervisor.get(url).map do |item|
+        clazz.new hypervisor, parent, "#{url}/#{item["id"]}"
       end
     end
 
@@ -22,7 +25,12 @@ module SimpleStack
       response = hypervisor.post(url, options)
       entity_path = response.headers["location"].sub(/^\//, "").sub(/\/$/, "")
       entity_url = "#{connection.url}/#{entity_path}"
-      clazz.new hypervisor, entity_url
+      new_item = clazz.new hypervisor, parent, entity_url
+      if cacheable?
+        cached_attributes[:items] ||= []
+        cached_attributes[:items] << self
+      end
+      new_item
     end
 
     def method_missing(method, *args, &block)
@@ -36,6 +44,5 @@ module SimpleStack
     def connection
       hypervisor.connection
     end
-
   end
 end

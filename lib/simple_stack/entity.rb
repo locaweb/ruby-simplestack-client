@@ -1,14 +1,17 @@
 module SimpleStack
   class Entity
-    attr_accessor :hypervisor, :url
+    include SimpleStack::Cacheable
 
-    def initialize(hypervisor, url)
+    attr_accessor :hypervisor, :parent, :url
+
+    def initialize(hypervisor, parent, url)
       self.hypervisor = hypervisor
+      self.parent = parent
       self.url = url.to_s
     end
 
     def info
-      hypervisor.get url
+      cached_attributes[:info] ||= hypervisor.get url
     end
 
     def update(attributes = {})
@@ -16,7 +19,12 @@ module SimpleStack
     end
 
     def delete
-      hypervisor.delete url
+      response = hypervisor.delete url
+      if cacheable?
+        parent.cached_attributes[:items] ||= []
+        parent.cached_attributes[:items].delete self
+      end
+      response
     end
 
     def inspect

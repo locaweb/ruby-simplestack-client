@@ -1,7 +1,7 @@
 module SimpleStack
   class Guest < Entity
     def snapshots
-      SimpleStack::Collection.new hypervisor, "#{url}/snapshots", SimpleStack::Snapshot
+      cached_attributes[:snapshots] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/snapshots", SimpleStack::Snapshot
     end
 
     def reboot(opts={:force => false})

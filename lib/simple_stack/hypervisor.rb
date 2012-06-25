@@ -1,5 +1,7 @@
 module SimpleStack
   class Hypervisor
+    include SimpleStack::Cacheable
+
     attr_accessor :connection, :type, :host, :username, :password
 
     def initialize(connection, type, options)
@@ -28,11 +30,11 @@ module SimpleStack
     end
 
     def info
-      self.get url
+      cached_attributes[:info] ||= self.get url
     end
 
     def guests
-      SimpleStack::Collection.new self, "#{url}/guests", SimpleStack::Guest
+      cached_attributes[:guests] ||= SimpleStack::Collection.new self, self, "#{url}/guests", SimpleStack::Guest
     end
 
     def get(url)
