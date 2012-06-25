@@ -4,6 +4,18 @@ module SimpleStack
       cached_attributes[:snapshots] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/snapshots", SimpleStack::Snapshot
     end
 
+    def tags
+      cached_attributes[:tags] ||= hypervisor.get("#{url}/tags").parsed_response
+    end
+
+    def add_tag(tag)
+      hypervisor.post "#{url}/tags", :name => tag
+    end
+
+    def remove_tag(tag)
+      hypervisor.delete "#{url}/tags/#{tag}"
+    end
+
     def reboot(opts={:force => false})
       hypervisor.put "#{url}/reboot", :force => opts[:force]
     end
