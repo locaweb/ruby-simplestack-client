@@ -24,6 +24,18 @@ module SimpleStack
       snapshot.revert
     end
 
+    def insert_media(media_name)
+      hypervisor.put("#{url}/media_device", :name => media_name)
+    end
+
+    def eject_media
+      hypervisor.put("#{url}/media_device", :name => nil)
+    end
+
+    def inserted_media
+      hypervisor.get("#{url}/media_device").parsed_response["name"]
+    end
+
     def power_state=(state)
       hypervisor.put "#{url}/power", :state => state
     end
