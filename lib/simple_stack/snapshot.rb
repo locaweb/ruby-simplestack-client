@@ -5,7 +5,7 @@ module SimpleStack
     end
 
     def revert
-      raise "Not Implemented"
+      hypervisor.put "#{url}/revert"
     end
   end
 end

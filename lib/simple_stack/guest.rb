@@ -8,6 +8,10 @@ module SimpleStack
       hypervisor.put "#{url}/reboot", :force => opts[:force]
     end
 
+    def revert_to(snapshot)
+      snapshot.revert
+    end
+
     def power_state=(state)
       hypervisor.put "#{url}/power", :state => state
     end
