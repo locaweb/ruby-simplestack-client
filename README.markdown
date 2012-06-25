@@ -2,30 +2,66 @@
 
 A simple gem to deal with Simple Stack project.
 
-<pre><code>
-stack = SimpleStack.new :url => url, :login => login, :password => password
-vmware = stack.connect_to("vmware", :host => host, :login => login, :password => password)
-vmware.info
-vmware.guests
-# TODO:
-# vmware.used_memory
-# vmware.total_memory
-# vmware.import vm_file
+Get a simplestack class:
 
-guest = vmware.guests.find(vm.id)
-guest.info
-guest.update(:name => "lerolero", :memory => 512)
-guest.delete
-guest.reboot
-guest.stop
+    stack = SimpleStack::Connection.new :url => url, :username => username, :password => password
 
-# TODO:
-# file = guest.export :to => file_path
+Connecting to hypervisor:
 
-snap = guest.snapshots.create :name => :lerolero
-snap.delete
-snap.use
-</code>
-</pre>
+    vmware = stack.connect_to("vmware", :host => host, :username => username, :password => password)
 
+Pool informations:
 
+    vmware.info
+    vmware.guests
+
+    # TODO:
+    # vmware.used_memory
+    # vmware.total_memory
+    # vmware.import vm_file
+
+### Working with Guests
+
+    guest = vmware.guests.find(vm.uuid)
+    guest.info
+    guest.update(:name => "Guest name", :memory => 512)
+    guest.delete
+
+Shutdown and power on and reboot
+    guest.stop
+    guest.start
+    guest.reboot
+
+Force the guest shutdown
+    guest.force_stop
+
+Resume and suspend guests
+
+    guest.resume
+    guest.pause
+
+TODO:
+
+    file = guest.export :to => file_path
+
+#### Snapshots
+
+List snapshots
+
+    guest.snapshots
+
+Find a snapshot
+
+    guest.snapshots.find(snap.uuid)
+
+Create a new snapshot
+
+    snap = guest.snapshots.create :name => :snapshot_name
+
+Delete a snapshot
+
+    snap.delete
+
+Revert a snapshot
+
+    snap.use
