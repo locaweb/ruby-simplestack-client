@@ -1,9 +1,10 @@
 module SimpleStack
   class Connection
-    attr_accessor :url
+    attr_accessor :url, :graceful_degradation
 
     def initialize(options = {})
       self.url = options[:url].to_s.sub(/\/$/, "")
+      self.graceful_degradation = options[:graceful_degradation]
     end
 
     def connect_to(type, options)

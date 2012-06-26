@@ -38,19 +38,26 @@ module SimpleStack
     end
 
     def get(url)
-      HTTParty.get(url, :headers => headers, :no_follow => true)
+      http_call { HTTParty.get(url, :headers => headers, :no_follow => true) }
     end
 
     def post(url, body)
-      HTTParty.post(url, :body => JSON.dump(body), :headers => headers, :no_follow => true)
+      http_call { HTTParty.post(url, :body => JSON.dump(body), :headers => headers, :no_follow => true) }
     end
 
     def put(url, body)
-      HTTParty.put(url, :body => JSON.dump(body), :headers => headers, :no_follow => true)
+      http_call { HTTParty.put(url, :body => JSON.dump(body), :headers => headers, :no_follow => true) }
     end
 
     def delete(url)
-      HTTParty.delete(url, :headers => headers, :no_follow => true)
+      http_call { HTTParty.delete(url, :headers => headers, :no_follow => true) }
+    end
+
+    def http_call
+      response = yield
+      return SimpleStack::GracefulObject.new if response.code == 501 && connection.graceful_degradation
+      raise SimpleStack::Exception.factory(response.parsed_response) if response.code >= 400
+      response
     end
 
     def inspect

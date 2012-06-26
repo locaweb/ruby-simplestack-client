@@ -9,11 +9,15 @@ module SimpleStack
     end
 
     def add_tag(tag)
+      cached_attributes[:tags] ||= []
       hypervisor.post "#{url}/tags", :name => tag
+      cached_attributes[:tags] << tag
     end
 
     def remove_tag(tag)
+      cached_attributes[:tags] ||= []
       hypervisor.delete "#{url}/tags/#{tag}"
+      cached_attributes[:tags].delete tag
     end
 
     def reboot(opts={:force => false})
