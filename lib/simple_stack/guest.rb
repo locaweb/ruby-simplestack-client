@@ -11,13 +11,13 @@ module SimpleStack
     def add_tag(tag)
       cached_attributes[:tags] ||= []
       hypervisor.post "#{url}/tags", :name => tag
-      cached_attributes[:tags] << tag
+      cached_attributes[:tags] << tag if cached_attributes[:tags]
     end
 
     def remove_tag(tag)
       cached_attributes[:tags] ||= []
       hypervisor.delete "#{url}/tags/#{tag}"
-      cached_attributes[:tags].delete tag
+      cached_attributes[:tags].delete tag if cached_attributes[:tags]
     end
 
     def reboot(opts={:force => false})
