@@ -6,7 +6,11 @@ module SimpleStack
     end
 
     def cacheable?
-      false
+      if respond_to? :connection
+        connection.cache_enabled
+      else
+        false
+      end
     end
 
     def cached_attributes
