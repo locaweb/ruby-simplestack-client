@@ -13,19 +13,19 @@ module SimpleStack
 
     def to_a
       cached_attributes[:items] ||= hypervisor.get(url).map do |item|
-        clazz.new hypervisor, parent, "#{url}/#{item["id"]}"
+        clazz.new hypervisor, self, "#{url}/#{item["id"]}"
       end
     end
 
     def find(id)
-      clazz.new hypervisor, "#{url}/#{id}"
+      clazz.new hypervisor, self, "#{url}/#{id}"
     end
 
     def create(options={})
       response = hypervisor.post(url, options)
       entity_path = response.headers["location"].sub(/^\//, "").sub(/\/$/, "")
       entity_url = "#{connection.url}/#{entity_path}"
-      new_item = clazz.new hypervisor, parent, entity_url
+      new_item = clazz.new hypervisor, self, entity_url
       if cacheable?
         cached_attributes[:items] ||= []
         cached_attributes[:items] << self
