@@ -59,7 +59,7 @@ module SimpleStack
     end
 
     def delete(url)
-      http_call { HTTParty.delete(url, http_options.merge(:body => JSON.dump(body))) }
+      http_call { HTTParty.delete(url, http_options) }
     end
 
     def http_call
