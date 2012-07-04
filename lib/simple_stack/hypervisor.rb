@@ -25,6 +25,15 @@ module SimpleStack
       }
     end
 
+    def http_options
+      {
+        :timeout => connection.timeout,
+        :read_timeout => connection.read_timeout,
+        :no_follow => true,
+        :headers => headers
+      }
+    end
+
     def token
       Base64.encode64("#{username}:#{password}").split("\n").join("")
     end
@@ -38,19 +47,19 @@ module SimpleStack
     end
 
     def get(url)
-      http_call { HTTParty.get(url, :headers => headers, :no_follow => true) }
+      http_call { HTTParty.get(url, http_options) }
     end
 
     def post(url, body)
-      http_call { HTTParty.post(url, :body => JSON.dump(body), :headers => headers, :no_follow => true) }
+      http_call { HTTParty.post(url, http_options.merge(:body => JSON.dump(body))) }
     end
 
     def put(url, body)
-      http_call { HTTParty.put(url, :body => JSON.dump(body), :headers => headers, :no_follow => true) }
+      http_call { HTTParty.put(url, http_options.merge(:body => JSON.dump(body))) }
     end
 
     def delete(url)
-      http_call { HTTParty.delete(url, :headers => headers, :no_follow => true) }
+      http_call { HTTParty.delete(url, http_options.merge(:body => JSON.dump(body))) }
     end
 
     def http_call
