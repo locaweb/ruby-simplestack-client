@@ -50,12 +50,40 @@ module SimpleStack
       http_call { HTTParty.get(url, http_options) }
     end
 
+    def get_stream(url, io)
+      uri  = URI.parse url
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Get.new(uri.path)
+
+      headers.each_pair do |k, v|
+        request.add_field(k, v)
+      end
+
+      http.request(request) do |res|
+        res.read_body {|chunk| io.write chunk }
+      end
+    end
+
     def post(url, body)
       http_call { HTTParty.post(url, http_options.merge(:body => JSON.dump(body))) }
     end
 
     def put(url, body)
       http_call { HTTParty.put(url, http_options.merge(:body => JSON.dump(body))) }
+    end
+
+    def put_stream(url, io)
+      uri  = URI.parse url
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Put.new(uri.path, {})
+
+      headers.each_pair do |k, v|
+        request.add_field(k, v)
+      end
+
+      request.body_stream = io
+      request.content_length = io.size
+      http.request(request)
     end
 
     def delete(url)

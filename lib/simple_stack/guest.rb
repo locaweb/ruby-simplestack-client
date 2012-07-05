@@ -24,6 +24,17 @@ module SimpleStack
       hypervisor.put "#{url}/reboot", :force => opts[:force]
     end
 
+    def export(opts={})
+      opts = {:to => "/tmp/export_file"}.merge(opts)
+      file = File.open(opts[:to], "wb")
+
+      hypervisor.get_stream("#{url}/export", file)
+
+      options[:to]
+    ensure
+      file.close rescue nil
+    end
+
     def revert_to(snapshot)
       snapshot.revert
     end
