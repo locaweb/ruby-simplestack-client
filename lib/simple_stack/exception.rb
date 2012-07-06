@@ -1,7 +1,7 @@
 module SimpleStack
   class Exception < ::Exception
     def self.factory(error)
-      return Exception.new(error) if !error.is_a?(Hash)
+      return Exception.new(error.inspect) if !error.is_a?(Hash)
       case error["error"]
       when "EntityNotFound"
         EntityNotFound.new(error["message"])
