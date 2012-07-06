@@ -39,8 +39,9 @@ module SimpleStack
       snapshot.revert
     end
 
-    def insert_media(media_name)
-      hypervisor.put("#{url}/media_device", :name => media_name)
+    def insert_media(media_name, opts={})
+      media_options = opts.merge(:name => media_name)
+      hypervisor.put("#{url}/media_device", media_options)
     end
 
     def eject_media
