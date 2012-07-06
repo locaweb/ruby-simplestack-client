@@ -12,7 +12,7 @@ module SimpleStack
       when "HypervisorError"
         HypervisorError.new(error["message"])
       else
-         Exception.new(error["message"])
+        Exception.new(error.inspect)
       end
     end
   end
