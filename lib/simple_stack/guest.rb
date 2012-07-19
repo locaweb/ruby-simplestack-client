@@ -1,5 +1,9 @@
 module SimpleStack
   class Guest < Entity
+    def network_interfaces
+      cached_attributes[:network_interfaces] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/network_interfaces", SimpleStack::NetworkInterface
+    end
+
     def snapshots
       cached_attributes[:snapshots] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/snapshots", SimpleStack::Snapshot
     end
