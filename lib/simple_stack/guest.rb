@@ -1,5 +1,9 @@
 module SimpleStack
   class Guest < Entity
+    def disks
+      cached_attributes[:disks] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/disks", SimpleStack::Disk
+    end
+
     def network_interfaces
       cached_attributes[:network_interfaces] ||= SimpleStack::Collection.new hypervisor, self, "#{url}/network_interfaces", SimpleStack::NetworkInterface
     end
@@ -41,6 +45,13 @@ module SimpleStack
 
     def revert_to(snapshot)
       snapshot.revert
+    end
+
+    def clone(opts={})
+      response = hypervisor.post("#{url}/clone", opts)
+      entity_path = response.headers["location"].sub(/^\//, "").sub(/\/$/, "")
+      entity_url = "#{connection.url}/#{entity_path}"
+      new_item = SimpleStack::Guest.new hypervisor, self, entity_url
     end
 
     def insert_media(media_name, opts={})
