@@ -11,6 +11,7 @@ require "simple_stack/entity"
 require "simple_stack/guest"
 require "simple_stack/snapshot"
 require "simple_stack/network_interface"
+require "simple_stack/disk"
 
 module SimpleStack
   def self.client
