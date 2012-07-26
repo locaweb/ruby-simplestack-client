@@ -46,6 +46,17 @@ module SimpleStack
       cached_attributes[:guests] ||= SimpleStack::Collection.new self, self, "#{url}/guests", SimpleStack::Guest
     end
 
+    def import(opts={})
+      file = File.open(opts[:from], "rb")
+
+      response = put_stream("#{url}/guests", file)
+      entity_path = response["location"].sub(/^\//, "").sub(/\/$/, "")
+      entity_url = "#{connection.url}/#{entity_path}"
+      SimpleStack::Guest.new hypervisor, guests, entity_url
+    ensure
+      file.close rescue nil
+    end
+
     def get(url)
       http_call { HTTParty.get(url, http_options) }
     end
@@ -83,7 +94,10 @@ module SimpleStack
 
       request.body_stream = io
       request.content_length = io.size
-      http.request(request)
+      response = http.request(request)
+
+      raise SimpleStack::Exception.factory(JSON.load(response.body) if response.code >= 400
+      response
     end
 
     def delete(url)
