@@ -96,7 +96,7 @@ module SimpleStack
       request.content_length = io.size
       response = http.request(request)
 
-      raise SimpleStack::Exception.factory(JSON.load(response.body) if response.code >= 400
+      raise SimpleStack::Exception.factory(JSON.load(response.body)) if response.code >= 400
       response
     end
 
