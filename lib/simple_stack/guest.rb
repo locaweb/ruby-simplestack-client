@@ -38,7 +38,7 @@ module SimpleStack
 
       hypervisor.get_stream("#{url}/export", file)
 
-      options[:to]
+      opts[:to]
     ensure
       file.close rescue nil
     end

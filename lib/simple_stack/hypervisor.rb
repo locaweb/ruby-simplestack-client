@@ -52,7 +52,7 @@ module SimpleStack
       response = put_stream("#{url}/guests", file)
       entity_path = response["location"].sub(/^\//, "").sub(/\/$/, "")
       entity_url = "#{connection.url}/#{entity_path}"
-      SimpleStack::Guest.new hypervisor, guests, entity_url
+      SimpleStack::Guest.new self, guests, entity_url
     ensure
       file.close rescue nil
     end
@@ -96,7 +96,11 @@ module SimpleStack
       request.content_length = io.size
       response = http.request(request)
 
-      raise SimpleStack::Exception.factory(JSON.load(response.body)) if response.code >= 400
+      if response.code.to_i >= 400
+        parsed_response = JSON.load(response.body) rescue response.body
+        raise SimpleStack::Exception.factory(parsed_response)
+      end
+
       response
     end
 
