@@ -42,6 +42,10 @@ module SimpleStack
       cached_attributes[:info] ||= self.get url
     end
 
+    def storages
+      cached_attributes[:storages] ||= SimpleStack::Collection.new self, self, "#{url}/storages", SimpleStack::Storage
+    end
+
     def guests
       cached_attributes[:guests] ||= SimpleStack::Collection.new self, self, "#{url}/guests", SimpleStack::Guest
     end

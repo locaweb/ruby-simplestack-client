@@ -11,7 +11,7 @@ module SimpleStack
     end
 
     def info
-      cached_attributes[:info] ||= hypervisor.get url
+      cached_attributes[:info] ||= hypervisor.get(url).parsed_response
     end
 
     def update(attributes = {})
@@ -33,6 +33,15 @@ module SimpleStack
 
     def connection
       hypervisor.connection
+    end
+
+    def method_missing(method, *args, &block)
+      entity_info = info
+      if entity_info.keys.include?(method.to_s)
+        entity_info[method]
+      else
+        super
+      end
     end
   end
 end
