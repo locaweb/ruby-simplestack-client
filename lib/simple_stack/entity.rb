@@ -38,7 +38,7 @@ module SimpleStack
     def method_missing(method, *args, &block)
       entity_info = info
       if entity_info.keys.include?(method.to_s)
-        entity_info[method]
+        entity_info[method.to_s]
       else
         super
       end
