@@ -20,10 +20,7 @@ module SimpleStack
 
     def delete
       response = hypervisor.delete url
-      if cacheable?
-        parent.cached_attributes[:items] ||= []
-        parent.cached_attributes[:items].delete self
-      end
+      parent.reload if cacheable?
       response
     end
 

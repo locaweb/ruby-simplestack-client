@@ -53,10 +53,10 @@ module SimpleStack
     def import(opts={})
       file = File.open(opts[:from], "rb")
 
-      response = put_stream("#{url}/guests", file)
+      response = post_stream("#{url}/guests", file)
       entity_path = response["location"].sub(/^\//, "").sub(/\/$/, "")
       entity_url = "#{connection.url}/#{entity_path}"
-      SimpleStack::Guest.new self, guests, entity_url
+      SimpleStack::Guest.new self, guests.reload, entity_url
     ensure
       file.close rescue nil
     end
@@ -87,10 +87,10 @@ module SimpleStack
       http_call { HTTParty.put(url, http_options.merge(:body => JSON.dump(body))) }
     end
 
-    def put_stream(url, io)
+    def post_stream(url, io)
       uri  = URI.parse url
       http = Net::HTTP.new(uri.host, uri.port)
-      request = Net::HTTP::Put.new(uri.path, {})
+      request = Net::HTTP::Post.new(uri.path, {})
 
       headers.each_pair do |k, v|
         request.add_field(k, v)

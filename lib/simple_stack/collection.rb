@@ -26,10 +26,7 @@ module SimpleStack
       entity_path = response.headers["location"].sub(/^\//, "").sub(/\/$/, "")
       entity_url = "#{connection.url}/#{entity_path}"
       new_item = clazz.new hypervisor, self, entity_url
-      if cacheable?
-        cached_attributes[:items] ||= []
-        cached_attributes[:items] << self
-      end
+      reload if cacheable?
       new_item
     end
 
