@@ -57,14 +57,16 @@ module SimpleStack
     def insert_media(media_name, opts={})
       media_options = opts.merge(:name => media_name)
       hypervisor.put("#{url}/media_device", media_options)
+      reload if cacheable?
     end
 
     def eject_media
       hypervisor.put("#{url}/media_device", :name => nil)
+      reload if cacheable?
     end
 
     def inserted_media
-      hypervisor.get("#{url}/media_device").parsed_response["name"]
+      cached_attributes[:inserted_media] ||= hypervisor.get("#{url}/media_device").parsed_response["name"]
     end
 
     def power_state=(state)
