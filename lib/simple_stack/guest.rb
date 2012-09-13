@@ -66,7 +66,11 @@ module SimpleStack
     end
 
     def inserted_media
-      cached_attributes[:inserted_media] ||= hypervisor.get("#{url}/media_device").parsed_response["name"]
+      if cached_attributes.key? :inserted_media
+        cached_attributes[:inserted_media]
+      else
+        cached_attributes[:inserted_media] = hypervisor.get("#{url}/media_device").parsed_response["name"]
+      end
     end
 
     def power_state=(state)
