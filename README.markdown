@@ -1,4 +1,5 @@
-# Simple Stack Gem
+Simplestack ruby client
+=======================
 
 A simple gem to deal with Simple Stack project.
 
@@ -20,7 +21,8 @@ Pool informations:
     # vmware.total_memory
     # vmware.import vm_file
 
-### Working with Guests
+Working with Guests
+-------------------
 
     guest = vmware.guests.find(vm.uuid)
     guest.info
@@ -28,11 +30,13 @@ Pool informations:
     guest.delete
 
 Shutdown and power on and reboot
+
     guest.stop
     guest.start
     guest.reboot
 
 Force the guest shutdown
+
     guest.force_stop
 
 Resume and suspend guests
@@ -44,7 +48,8 @@ TODO:
 
     file = guest.export :to => file_path
 
-#### Snapshots
+Snapshots
+---------
 
 List snapshots
 
