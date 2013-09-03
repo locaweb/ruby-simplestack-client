@@ -5,9 +5,9 @@ require "simple_stack/version"
 Gem::Specification.new do |s|
   s.name        = "simple_stack"
   s.version     = SimpleStack::VERSION
-  s.authors     = ["Thiago Morello"]
-  s.email       = ["thiago.morello@locaweb.com.br"]
-  s.homepage    = "http://locaweb.github.com/simplestack"
+  s.authors     = ["Thiago Morello", "Willian Molinari"]
+  s.email       = ["thiago.morello@locaweb.com.br", "willian.molinari@locaweb.com.br"]
+  s.homepage    = "https://github.com/locaweb/ruby-simplestack-client"
   s.summary     = %q{A simple gem to work with simplestack project}
   s.description = s.summary
 
