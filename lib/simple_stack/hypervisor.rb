@@ -54,6 +54,10 @@ module SimpleStack
       cached_attributes[:guests] ||= SimpleStack::Collection.new self, self, "#{url}/guests", SimpleStack::Guest
     end
 
+    def networks
+      cached_attributes[:networks] ||= SimpleStack::Collection.new self, self, "#{url}/networks", SimpleStack::Network
+    end
+
     def import(opts={})
       file = File.open(opts[:from], "rb")
 
