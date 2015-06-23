@@ -123,7 +123,9 @@ module SimpleStack
     def http_call
       response = yield
       return SimpleStack::GracefulObject.new if response.code == 501 && connection.graceful_degradation
-      raise SimpleStack::Exception.factory(response.parsed_response) if response.code >= 400
+
+      error_message = response.parsed_response rescue response.body
+      raise SimpleStack::Exception.factory(error_message) if response.code >= 400
       response
     end
 
