@@ -6,14 +6,14 @@ describe SimpleStack::Connection do
   subject {SimpleStack::Connection.new :url => url}
 
   it "should keep the connection url" do
-    subject.url.should == url
+    expect(subject.url).to eq(url)
   end
 
   it "should connect to a hypervisor" do
     host = "hypervisor_host"
     hypervisor = subject.connect_to :mock, host: host
-    hypervisor.type.should == :mock
-    hypervisor.host.should == host
-    hypervisor.url.should == "#{url}/mock/#{host}"
+    expect(hypervisor.type).to eq(:mock)
+    expect(hypervisor.host).to eq(host)
+    expect(hypervisor.url).to eq("#{url}/mock/#{host}")
   end
 end
