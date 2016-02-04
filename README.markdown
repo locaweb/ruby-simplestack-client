@@ -1,30 +1,35 @@
 Simplestack ruby client
 =======================
 
-A simple gem to deal with Simple Stack project.
+A simple gem made to provide a nice syntax when working with
+[Simplestack project](http://opensource.locaweb.com.br/simplestack/).
 
-Get a simplestack class:
+
+How to use it
+-------------
+
+First of all add [the gem](https://rubygems.org/gems/simple_stack) to your Gemfile:
+
+    gem "simple_stack", "~> 1.0"
+
+Now that you have the Simplestack namespace available, get a simplestack class:
 
     stack = SimpleStack::Connection.new :url => url, :username => username, :password => password
 
-Connecting to hypervisor:
+and connect to hypervisor:
 
-    vmware = stack.connect_to("vmware", :host => host, :username => username, :password => password)
+    xen = stack.connect_to("xen", :host => host, :username => username, :password => password)
 
-Pool informations:
+### Pool informations:
 
-    vmware.info
-    vmware.guests
+    xen.info
+    xen.guests
 
-    # TODO:
-    # vmware.used_memory
-    # vmware.total_memory
-    # vmware.import vm_file
+### Working with Guests
 
-Working with Guests
--------------------
+Main operations:
 
-    guest = vmware.guests.find(vm.uuid)
+    guest = xen.guests.find(uuid)
     guest.info
     guest.update(:name => "Guest name", :memory => 512)
     guest.delete
@@ -43,10 +48,6 @@ Resume and suspend guests
 
     guest.resume
     guest.pause
-
-TODO:
-
-    file = guest.export :to => file_path
 
 Snapshots
 ---------
@@ -70,3 +71,10 @@ Delete a snapshot
 Revert a snapshot
 
     snap.use
+
+
+Authors
+-------
+
+* [Willian Molinari (a.k.a PotHix)](http://pothix.com)
+* [Thiago Morello](http://github.com/morellon)
