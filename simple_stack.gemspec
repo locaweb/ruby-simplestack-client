@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec", "~> 3.4.0"
   s.add_runtime_dependency "httparty"
 end
